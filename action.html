@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>STILLWILD — Решение по заявке</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="style.css"/>
+    <style>
+        body{display:flex;flex-direction:column;min-height:100vh;align-items:center;justify-content:center;padding:2rem}
+        .action-box{
+            width:100%;max-width:520px;
+            background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);
+            overflow:hidden;box-shadow:0 30px 80px rgba(0,0,0,.5);
+            position:relative;z-index:1;
+        }
+        .action-top{padding:2rem;text-align:center;border-bottom:1px solid var(--border)}
+        .action-ico{font-size:3rem;margin-bottom:.75rem}
+        .action-title{font-family:var(--ff-display);font-size:1.2rem;letter-spacing:1px;margin-bottom:.4rem}
+        .action-sub{font-size:.85rem;color:var(--text-2)}
+        .action-body{padding:2rem}
+        .info-grid{display:grid;grid-template-columns:1fr 1fr;gap:.6rem;margin-bottom:1.5rem}
+        .info-field{background:var(--surface);border:1px solid var(--border);border-radius:7px;padding:.65rem .9rem}
+        .info-field-label{font-size:.68rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text-3);margin-bottom:.2rem}
+        .info-field-val{font-size:.88rem;color:var(--text);font-weight:500}
+        .reason-group{margin-bottom:1.5rem;display:none}
+        .reason-group label{display:block;font-size:.72rem;text-transform:uppercase;letter-spacing:.5px;color:var(--text-3);margin-bottom:.5rem}
+        .reason-group textarea{
+            width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);
+            padding:.7rem 1rem;color:var(--text);font-family:var(--ff-body);font-size:.9rem;
+            resize:vertical;outline:none;min-height:100px;transition:.2s;
+        }
+        .reason-group textarea:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(255,71,87,.1)}
+        .action-btns{display:flex;gap:.75rem}
+        .action-btns button{
+            flex:1;padding:.8rem;border-radius:var(--r);border:none;cursor:pointer;
+            font-family:var(--ff-display);font-size:.72rem;font-weight:700;letter-spacing:1px;
+            text-transform:uppercase;transition:.2s;
+        }
+        .btn-accept-final{background:var(--mint);color:#060a0e}
+        .btn-accept-final:hover{opacity:.85}
+        .btn-reject-final{background:var(--red);color:#fff}
+        .btn-reject-final:hover{opacity:.85}
+        button:disabled{opacity:.4;cursor:not-allowed}
+        /* result states */
+        #state-accepted,#state-rejected,#state-error{display:none}
+        .result-box{text-align:center;padding:2rem}
+        .result-ico{font-size:3rem;margin-bottom:.75rem}
+        .result-title{font-family:var(--ff-display);font-size:1.1rem;margin-bottom:.5rem}
+        .result-desc{font-size:.85rem;color:var(--text-2);margin-bottom:1.5rem}
+        .result-title.green{color:var(--mint)}
+        .result-title.red{color:var(--red)}
+        .result-title.gray{color:var(--text-2)}
+        .back-link{
+            display:inline-flex;align-items:center;gap:.4rem;
+            color:var(--mint);font-size:.82rem;font-weight:500;
+        }
+        .back-link:hover{opacity:.8}
+        /* wrong key */
+        #state-wrong{text-align:center;padding:2rem}
+        /* loading */
+        #state-loading{text-align:center;padding:2.5rem;color:var(--text-2)}
+        .spin{width:30px;height:30px;border:2px solid var(--border);border-top-color:var(--mint);border-radius:50%;animation:spin .8s linear infinite;margin:.75rem auto 0}
+        @keyframes spin{to{transform:rotate(360deg)}}
+        .nav-logo-sm{position:fixed;top:1rem;left:1.5rem;z-index:10;display:flex;align-items:center;gap:.4rem;font-family:var(--ff-display);font-size:.9rem;letter-spacing:2px}
+        .nav-logo-sm .lo{color:var(--mint)}
+        @media(max-width:600px){
+            body{padding:1rem .75rem;padding-top:3.5rem}
+            .action-box{border-radius:12px}
+            .action-top{padding:1.5rem 1.25rem}
+            .action-body{padding:1.25rem}
+            .info-grid{grid-template-columns:1fr 1fr}
+            .action-btns{flex-direction:column}
+            .action-btns button{width:100%}
+            .result-box{padding:1.5rem 1rem}
+            input,select,textarea{font-size:16px!important}
+        }
+        @media(max-width:380px){
+            .info-grid{grid-template-columns:1fr}
+            .action-title{font-size:1rem}
+        }
+    </style>
+</head>
+<body>
+<canvas id="bg-canvas"></canvas>
+
+<a href="index.html" class="nav-logo-sm">
+    <span style="font-size:1.1rem;filter:drop-shadow(0 0 5px var(--mint))">⛏</span>
+    <span>STILL<span class="lo">WILD</span></span>
+</a>
+
+<div class="action-box">
+
+    <!-- Loading -->
+    <div id="state-loading">
+        <div style="padding:2rem;text-align:center;color:var(--text-2)">
+            <div style="font-size:1.5rem;margin-bottom:.5rem">⛏</div>
+            Загрузка...
+        </div>
+        <div class="spin"></div>
+        <div style="padding-bottom:1.5rem"></div>
+    </div>
+
+    <!-- Wrong key -->
+    <div id="state-wrong">
+        <div class="result-box">
+            <div class="result-ico">🔒</div>
+            <div class="result-title gray">Нет доступа</div>
+            <div class="result-desc">Ссылка устарела или недействительна.<br>Перейди по свежей ссылке из Discord.</div>
+            <a href="index.html" class="back-link">← На сайт</a>
+        </div>
+    </div>
+
+    <!-- Main action UI (accept mode) -->
+    <div id="state-accept">
+        <div class="action-top">
+            <div class="action-ico">✅</div>
+            <div class="action-title" style="color:var(--mint)">Принять заявку?</div>
+            <div class="action-sub">Подтверди, что хочешь принять этого игрока</div>
+        </div>
+        <div class="action-body">
+            <div class="info-grid" id="info-grid-accept"></div>
+            <div class="action-btns">
+                <button class="btn-accept-final" id="btn-do-accept">✅ Подтвердить принятие</button>
+                <button onclick="window.close()" style="flex:none;padding:.8rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);color:var(--text-2);cursor:pointer">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main action UI (reject mode) -->
+    <div id="state-reject">
+        <div class="action-top">
+            <div class="action-ico">❌</div>
+            <div class="action-title" style="color:var(--red)">Отклонить заявку?</div>
+            <div class="action-sub">Укажи причину — она будет видна в итоговом уведомлении</div>
+        </div>
+        <div class="action-body">
+            <div class="info-grid" id="info-grid-reject"></div>
+            <div class="reason-group" id="reason-group" style="display:block">
+                <label>Причина отказа *</label>
+                <textarea id="reason-input" placeholder="Например: Анкета заполнена слишком кратко. Недостаточно информации о себе. Попробуй снова через неделю."></textarea>
+            </div>
+            <div class="action-btns">
+                <button class="btn-reject-final" id="btn-do-reject">❌ Подтвердить отказ</button>
+                <button onclick="window.close()" style="flex:none;padding:.8rem 1rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r);color:var(--text-2);cursor:pointer">Отмена</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success: accepted -->
+    <div id="state-accepted">
+        <div class="result-box">
+            <div class="result-ico">🎉</div>
+            <div class="result-title green">Заявка принята!</div>
+            <div class="result-desc">Результат отправлен в Discord.<br>Не забудь добавить игрока в вайтлист.</div>
+            <a href="index.html" class="back-link">← На сайт</a>
+        </div>
+    </div>
+
+    <!-- Success: rejected -->
+    <div id="state-rejected">
+        <div class="result-box">
+            <div class="result-ico">📋</div>
+            <div class="result-title red">Заявка отклонена</div>
+            <div class="result-desc">Результат с причиной отправлен в Discord.</div>
+            <a href="index.html" class="back-link">← На сайт</a>
+        </div>
+    </div>
+
+    <!-- Error -->
+    <div id="state-error">
+        <div class="result-box">
+            <div class="result-ico">⚠️</div>
+            <div class="result-title gray">Ошибка отправки</div>
+            <div class="result-desc" id="err-msg">Не удалось отправить результат в Discord.<br>Проверь вебхук в script.js</div>
+            <button onclick="location.reload()" style="margin-top:1rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.5rem 1.25rem;color:var(--text-2);cursor:pointer;font-family:var(--ff-body)">Попробовать снова</button>
+        </div>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+<script>
+    // Parse URL params
+    const params  = new URLSearchParams(location.search);
+    const action  = params.get('a');      // 'accept' or 'reject'
+    const dataB64 = params.get('d');      // base64 encoded payload
+    const key     = params.get('k');      // secret key
+
+    let payload = null;
+
+    function showOnly(id) {
+        ['state-loading','state-wrong','state-accept','state-reject',
+            'state-accepted','state-rejected','state-error']
+            .forEach(s => {
+                const el = document.getElementById(s);
+                if (el) el.style.display = s === id ? 'block' : 'none';
+            });
+    }
+
+    function buildInfoGrid(containerId) {
+        const el = document.getElementById(containerId);
+        if (!el || !payload) return;
+        const typeLabel = payload.type === 'whitelist' ? '📋 Вайтлист' : '🛡️ Администрация';
+        el.innerHTML = `
+      <div class="info-field"><div class="info-field-label">Ник</div><div class="info-field-val">${esc(payload.nick)}</div></div>
+      <div class="info-field"><div class="info-field-label">Discord</div><div class="info-field-val">${esc(payload.discord)}</div></div>
+      <div class="info-field"><div class="info-field-label">Тип заявки</div><div class="info-field-val">${typeLabel}</div></div>
+      <div class="info-field"><div class="info-field-label">Возраст</div><div class="info-field-val">${esc(payload.age || '—')}</div></div>
+    `;
+    }
+
+    function esc(s) {
+        return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    }
+
+    // Init
+    try {
+        if (!action || !dataB64 || !key) throw new Error('missing params');
+        if (key !== CFG.actionSecret)     throw new Error('wrong key');
+
+        payload = JSON.parse(decodeURIComponent(escape(atob(dataB64))));
+        if (!payload || !payload.type)    throw new Error('bad payload');
+
+        if (action === 'accept') {
+            buildInfoGrid('info-grid-accept');
+            showOnly('state-accept');
+        } else if (action === 'reject') {
+            buildInfoGrid('info-grid-reject');
+            showOnly('state-reject');
+        } else {
+            throw new Error('unknown action');
+        }
+
+    } catch (e) {
+        console.warn('action.html init error:', e.message);
+        showOnly('state-wrong');
+    }
+
+    // Accept button
+    const btnAccept = document.getElementById('btn-do-accept');
+    if (btnAccept) {
+        btnAccept.addEventListener('click', async () => {
+            btnAccept.disabled = true;
+            btnAccept.textContent = 'Отправляю...';
+            try {
+                const ok = await sendResultWebhook('accept', payload, '');
+                showOnly(ok ? 'state-accepted' : 'state-error');
+            } catch(e) {
+                document.getElementById('err-msg').textContent = e.message;
+                showOnly('state-error');
+            }
+        });
+    }
+
+    // Reject button
+    const btnReject = document.getElementById('btn-do-reject');
+    if (btnReject) {
+        btnReject.addEventListener('click', async () => {
+            const reason = document.getElementById('reason-input').value.trim();
+            if (!reason) {
+                document.getElementById('reason-input').style.borderColor = 'var(--red)';
+                document.getElementById('reason-input').placeholder = '⚠️ Обязательно укажи причину!';
+                document.getElementById('reason-input').focus();
+                return;
+            }
+            btnReject.disabled = true;
+            btnReject.textContent = 'Отправляю...';
+            try {
+                const ok = await sendResultWebhook('reject', payload, reason);
+                showOnly(ok ? 'state-rejected' : 'state-error');
+            } catch(e) {
+                document.getElementById('err-msg').textContent = e.message;
+                showOnly('state-error');
+            }
+        });
+    }
+</script>
+</body>
+</html>

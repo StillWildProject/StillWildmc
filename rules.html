@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STILLWILD — Официальные Правила</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mint: #00ffb0;
+            --bg: #070a0f;
+            --bg2: #0d1118;
+            --surface: rgba(255,255,255,0.03);
+            --border: rgba(255,255,255,0.07);
+            --text: #e8edf5;
+            --text-dim: #94a3b8;
+            --red: #ff4757;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            line-height: 1.6;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        /* Задний фон с твоим градиентом */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at 50% -15%, #1a2c28 0%, transparent 55%);
+            z-index: -1;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; }
+
+        .header { text-align: center; margin-bottom: 60px; }
+        .header h1 {
+            font-family: 'Audiowide', cursive;
+            font-size: clamp(2.5rem, 8vw, 4rem);
+            background: linear-gradient(to bottom, #fff, #64748b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+        .header p { color: var(--mint); text-transform: uppercase; letter-spacing: 4px; font-weight: 600; font-size: 0.9rem; }
+
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 30px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--mint);
+            box-shadow: 0 15px 40px rgba(0, 255, 176, 0.1);
+        }
+
+        .card-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+            font-family: 'Audiowide', sans-serif;
+            color: var(--mint);
+            font-size: 1.2rem;
+        }
+
+        .card-title span { font-size: 1.6rem; }
+
+        .item { margin-bottom: 25px; }
+        .item:last-child { margin-bottom: 0; }
+
+        .item-head { display: flex; align-items: baseline; gap: 10px; margin-bottom: 5px; }
+        .num { color: var(--mint); font-weight: 800; font-size: 0.9rem; opacity: 0.8; }
+        .name { font-weight: 600; color: #fff; font-size: 1.05rem; }
+
+        .desc { color: var(--text-dim); font-size: 0.95rem; display: block; margin-bottom: 8px; }
+
+        .punish {
+            display: inline-block;
+            background: rgba(255,255,255,0.04);
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            border-left: 3px solid var(--mint);
+            color: #fff;
+        }
+
+        .punish.critical { border-left-color: var(--red); background: rgba(255, 71, 87, 0.1); }
+
+        /* Важно знать */
+        .info-panel {
+            background: linear-gradient(135deg, rgba(0, 255, 176, 0.05) 0%, rgba(13, 17, 24, 1) 100%);
+            border: 1px solid var(--border-m);
+            border-radius: 24px;
+            padding: 40px;
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        .info-ico { font-size: 3rem; }
+        .info-content h2 { font-family: 'Audiowide', sans-serif; color: var(--mint); margin-bottom: 20px; }
+        .info-content p { margin-bottom: 15px; color: var(--text-dim); }
+        .info-content strong { color: #fff; }
+
+        @media (max-width: 768px) {
+            .info-panel { grid-template-columns: 1fr; text-align: center; }
+            .info-ico { font-size: 4rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header class="header">
+        <p>StillWild SMP Protocol</p>
+        <h1>Правила</h1>
+    </header>
+
+    <div class="rules-grid">
+        <div class="card">
+            <div class="card-title"><span>💬</span> 1. Поведение и чат</div>
+            <div class="item">
+                <div class="item-head"><span class="num">1.1</span> <span class="name">Уважение</span></div>
+                <span class="desc">Запрещены оскорбления, токсичность, дискриминация.</span>
+                <div class="punish">Мут 2ч–1д / Повторно: Бан 3 дня</div>
+            </div>
+            <div class="item">
+                <div class="item-head"><span class="num">1.2</span> <span class="name">Спам и капс</span></div>
+                <span class="desc">Запрещено засорять чат бессмысленными сообщениями.</span>
+                <div class="punish">Мут 30мин–2ч</div>
+            </div>
+            <div class="item">
+                <div class="item-head"><span class="num">1.3</span> <span class="name">Ложная информация</span></div>
+                <span class="desc">Запрещено выдавать себя за администрацию или обманывать игроков.</span>
+                <div class="punish">Бан 1–7 дней</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><span>⛏️</span> 2. Игровой процесс</div>
+            <div class="item">
+                <div class="item-head"><span class="num">2.1</span> <span class="name">Гриферство</span></div>
+                <span class="desc">Запрещено разрушать или изменять чужие постройки.</span>
+                <div class="punish">Бан 7 дней — Перм + откат</div>
+            </div>
+            <div class="item">
+                <div class="item-head"><span class="num">2.2</span> <span class="name">Воровство</span></div>
+                <span class="desc">Запрещено брать из чужих сундуков, печек, шалкеров.</span>
+                <div class="punish">Бан 3–14 дней + возврат</div>
+            </div>
+            <div class="item">
+                <div class="item-head"><span class="num">2.3</span> <span class="name">Ландшафт</span></div>
+                <span class="desc">Запрещены столбы, недорубленные деревья, бесцельные разливы.</span>
+                <div class="punish">Предупреждение / Повт: Бан 1 день</div>
+            </div>
+            <div class="item">
+                <div class="item-head"><span class="num">2.4</span> <span class="name">Территории</span></div>
+                <span class="desc">Нельзя строиться вплотную к чужой базе.</span>
+                <div class="punish">Снос + Бан 1 день</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><span>⚔️</span> 3. Боевые действия</div>
+            <div class="item">
+                <div class="item-head"><span class="num">3.1</span> <span class="name">PvP без согласия</span></div>
+                <span class="desc">Запрещено нападать без договорённости.</span>
+                <div class="punish">Бан 2–5 дней + возврат вещей</div>
+            </div>
+            <div class="item">
+                <div class="item-head"><span class="num">3.2</span> <span class="name">Убийство питомцев</span></div>
+                <span class="desc">Намеренное убийство чужих животных.</span>
+                <div class="punish">Бан 7 дней</div>
+            </div>
+            <div class="item">
+                <div class="item-head"><span class="num">3.3</span> <span class="name">Ловушки</span></div>
+                <span class="desc">Запрещены ловушки, убивающие при входе/ТП.</span>
+                <div class="punish">Бан 14 дней</div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title"><span>🖥️</span> 4. Техническая часть</div>
+            <div class="item">
+                <div class="item-head"><span class="num">4.1</span> <span class="name">Читы</span></div>
+                <span class="desc">X-Ray, Fly, KillAura и любые читы строго запрещены.</span>
+                <div class="punish critical">Перм. бан без права разбана</div>
+            </div>
+            <div class="item">
+                <div class="item-head"><span class="num">4.2</span> <span class="name">Лаг-машины</span></div>
+                <span class="desc">Запрещено нагружать сервер намеренно.</span>
+                <div class="punish critical">Перм. бан</div>
+            </div>
+            <div class="item">
+                <div class="item-head"><span class="num">4.3</span> <span class="name">Багоюз</span></div>
+                <span class="desc">Использование критических багов (дюп и т.д.).</span>
+                <div class="punish critical">Бан 30 дней — Перм.</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-panel">
+        <div class="info-ico">ℹ️</div>
+        <div class="info-content">
+            <h2>Важно знать</h2>
+            <p><strong>Чистосердечное признание:</strong> если вы случайно нарушили правило и сразу сообщили администратору — наказание может быть отменено или заменено исправлением ситуации.</p>
+            <p><strong>Логирование:</strong> все действия с блоками и сундуками записываются плагином CoreProtect. Обмануть администрацию не получится.</p>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
