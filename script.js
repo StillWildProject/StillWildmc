@@ -27,7 +27,7 @@ const CFG = {
 
     // Вебхук куда приходит итог (принят / отклонён) после action.html
     // Можно использовать тот же канал что и для заявок
-    resultWebhook: 'https://discord.com/api/webhooks/1486082871897882715/YlOqsT3G43-UUr8lQ1Tlx3nkeLFgCHMzXlxdroonJ7sUfRaF0bjM4yXiVtTzJU4UNnUL',
+    resultWebhook: https://discord.com/api/webhooks/1493634222399950971/DXVr8vANP2_MgDvOkzuRAbHO384CFudqFMWfUg4Q_5Poxmdd85tiEnyur-6mgZOLBPG8',
 
     // Секретный ключ для action.html — можно любое слово
     // Нужен чтобы чужие не могли открыть action.html и кликать
