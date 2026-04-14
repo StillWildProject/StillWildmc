@@ -24,13 +24,66 @@
         .don-price.amber{color:var(--amber);text-shadow:0 0 18px rgba(255,179,71,.35)}
         .don-price sup{font-size:.65rem;margin-top:.2rem;opacity:.75}
 
-        /* ── 2-column donate grid on wide screens ── */
+        /* ── Donate grid ── */
         .donate-grid{
             display:grid;
             grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
             gap:1.5rem;
         }
         @media(max-width:720px){.donate-grid{grid-template-columns:1fr}}
+
+        /* ── Punishment badge pills ── */
+        .rule-pen{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.4rem}
+        .pen{
+            display:inline-flex;align-items:center;gap:.25rem;
+            font-size:.7rem;font-weight:700;letter-spacing:.4px;
+            padding:.22rem .65rem;border-radius:50px;white-space:nowrap;
+        }
+        .pen-ban   {background:rgba(255,71,87,.18);color:#ff6b78;border:1px solid rgba(255,71,87,.35)}
+        .pen-perm  {background:rgba(200,0,30,.22);color:#ff3347;border:1px solid rgba(200,0,30,.45)}
+        .pen-mute  {background:rgba(255,179,71,.18);color:#ffb347;border:1px solid rgba(255,179,71,.35)}
+        .pen-warn  {background:rgba(0,255,176,.12);color:#00ffb0;border:1px solid rgba(0,255,176,.28)}
+        .pen-none  {background:rgba(255,255,255,.06);color:#8a96a8;border:1px solid rgba(255,255,255,.1)}
+        .pen-kick  {background:rgba(180,100,255,.15);color:#c97aff;border:1px solid rgba(180,100,255,.3)}
+
+        /* ── Clan rules section ── */
+        .clan-head{
+            display:flex;align-items:center;gap:.75rem;
+            margin:2.5rem 0 1.5rem;padding-bottom:.75rem;
+            border-bottom:1px solid var(--border);
+        }
+        .clan-head-ico{
+            width:38px;height:38px;border-radius:8px;
+            background:var(--mint-trace);border:1px solid var(--border-m);
+            display:flex;align-items:center;justify-content:center;font-size:1.1rem;
+            flex-shrink:0;
+        }
+        .clan-head h3{font-family:'Audiowide',monospace;font-size:.85rem;color:var(--mint);letter-spacing:.5px}
+        .clan-head p{font-size:.75rem;color:var(--text-3);margin-top:.15rem}
+        .clan-rules-grid{
+            display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;margin-bottom:1.5rem;
+        }
+        @media(max-width:720px){.clan-rules-grid{grid-template-columns:1fr}}
+        .clan-card{
+            background:rgba(0,255,176,.03);border:1px solid var(--border);
+            border-left:3px solid rgba(0,255,176,.35);
+            border-radius:var(--r);padding:1.1rem 1.25rem;
+        }
+        .clan-rule{margin-bottom:.85rem;font-size:.84rem;line-height:1.55}
+        .clan-rule:last-child{margin-bottom:0}
+        .clan-rule-num{
+            display:inline-flex;font-family:'Audiowide',monospace;font-size:.6rem;
+            background:rgba(0,255,176,.15);color:var(--mint);
+            padding:2px 6px;border-radius:4px;margin-right:.4rem;vertical-align:middle;
+        }
+        .clan-rule strong{color:var(--text);font-weight:600}
+        .clan-rule em{color:var(--text-2)}
+        .clan-note{
+            margin-top:.75rem;background:rgba(255,179,71,.06);
+            border:1px solid rgba(255,179,71,.15);border-radius:var(--r);
+            padding:.75rem 1rem;font-size:.78rem;color:var(--text-2);line-height:1.6;
+        }
+        .clan-note strong{color:var(--amber)}
     </style>
 </head>
 <body>
@@ -44,7 +97,6 @@
     </div>
     <ul class="nav-links">
         <li><a href="#rules">Правила</a></li>
-        <li><a href="#whitelist">Вайтлист</a></li>
         <li><a href="#admin">В Админы</a></li>
         <li><a href="#donate">Донаты</a></li>
         <li><a href="#contact">Связь</a></li>
@@ -64,7 +116,6 @@
 
 <div class="mob-menu" id="mob-menu">
     <a href="#rules">Правила</a>
-    <a href="#whitelist">Вайтлист</a>
     <a href="#admin">В Админы</a>
     <a href="#donate">Донаты</a>
     <a href="#contact">Связь</a>
@@ -87,11 +138,11 @@
             <p class="hero-desc">Настоящее выживание без модов и привилегий, дающих преимущество. Живое сообщество, честная игра, логирование всех действий.</p>
             <div class="ip-row">
                 <span class="ip-label">IP сервера</span>
-                <span class="ip-val">stillwild.vanilla.house</span>
+                <span class="ip-val">скоро...</span>
                 <button class="ip-copy" onclick="copyIP()">📋 Копировать</button>
             </div>
             <div class="hero-btns">
-                <a href="#whitelist" class="btn-primary">Подать заявку →</a>
+                <a href="#admin" class="btn-primary">В администрацию →</a>
                 <a href="#rules"     class="btn-ghost">Правила сервера</a>
             </div>
         </div>
@@ -127,41 +178,258 @@
             <p class="sec-desc">Соблюдение правил — основа здорового сообщества. Незнание не освобождает от ответственности.</p>
         </div>
         <div class="rules-grid rv d1">
+
+            <!-- 1. Поведение -->
             <div class="rule-card">
-                <div class="rule-card-head"><span class="rule-card-ico">💬</span><h3>1. Поведение и чат</h3></div>
+                <div class="rule-card-head"><span class="rule-card-ico">💬</span><h3>1. Поведение и общение</h3></div>
                 <ul class="rule-list">
-                    <li class="rule-item"><span class="rule-num">1.1</span><div class="rule-text"><strong>Уважение</strong> — запрещены оскорбления, токсичность, дискриминация.<div class="rule-pen">Мут 2ч–1д / Повторно: Бан 3 дня</div></div></li>
-                    <li class="rule-item"><span class="rule-num">1.2</span><div class="rule-text"><strong>Спам и капс</strong> — запрещено засорять чат бессмысленными сообщениями.<div class="rule-pen">Мут 30мин–2ч</div></div></li>
-                    <li class="rule-item"><span class="rule-num">1.3</span><div class="rule-text"><strong>Ложная информация</strong> — запрещено выдавать себя за администрацию или обманывать игроков.<div class="rule-pen">Бан 1–7 дней</div></div></li>
+                    <li class="rule-item"><span class="rule-num">1.1</span>
+                        <div class="rule-text"><strong>Уважение</strong> — оскорбления, унижения, националистические, расистские и любые дискриминационные высказывания строго запрещены. Касается как чата, так и никнеймов и табличек.
+                        <div class="rule-pen"><span class="pen pen-mute">Мут 6ч–3д</span><span class="pen pen-ban">Повторно: Бан 7 дней</span><span class="pen pen-perm">Системат.: Перм. бан</span></div></div>
+                    </li>
+                    <li class="rule-item"><span class="rule-num">1.2</span>
+                        <div class="rule-text"><strong>Токсичность</strong> — намеренное доведение до конфликта, провокации, троллинг, пассивная агрессия запрещены.
+                        <div class="rule-pen"><span class="pen pen-mute">Мут 2ч–1д</span><span class="pen pen-ban">Повторно: Бан 3 дня</span></div></div>
+                    </li>
+                    <li class="rule-item"><span class="rule-num">1.3</span>
+                        <div class="rule-text"><strong>Спам и капс</strong> — засорение чата одинаковыми сообщениями, бессмысленным набором символов или сообщениями написанными ПОЛНОСТЬЮ КАПСОМ запрещено.
+                        <div class="rule-pen"><span class="pen pen-mute">Мут 30мин–3ч</span><span class="pen pen-ban">Повторно: Мут 1 день</span></div></div>
+                    </li>
+                    <li class="rule-item"><span class="rule-num">1.4</span>
+                        <div class="rule-text"><strong>Реклама</strong> — запрещено рекламировать сторонние сервера, сайты, Discord-серверы и Telegram-каналы без разрешения администрации.
+                        <div class="rule-pen"><span class="pen pen-ban">Бан 3–14 дней</span><span class="pen pen-perm">Повторно: Перм. бан</span></div></div>
+                    </li>
+                    <li class="rule-item"><span class="rule-num">1.5</span>
+                        <div class="rule-text"><strong>Выдача себя за других</strong> — запрещено выдавать себя за администрацию, модераторов или других игроков с целью обмана.
+                        <div class="rule-pen"><span class="pen pen-ban">Бан 7–30 дней</span></div></div>
+                    </li>
+                    <li class="rule-item"><span class="rule-num">1.6</span>
+                        <div class="rule-text"><strong>Распространение личных данных</strong> — публикация личных данных других игроков (реальное имя, фото, адрес и т.д.) без их согласия категорически запрещена.
+                        <div class="rule-pen"><span class="pen pen-perm">Перм. бан</span></div></div>
+                    </li>
                 </ul>
             </div>
+
+            <!-- 2. Игровой процесс -->
             <div class="rule-card">
-                <div class="rule-card-head"><span class="rule-card-ico">⛏️</span><h3>2. Игровой процесс</h3></div>
+                <div class="rule-card-head"><span class="rule-card-ico">⛏️</span><h3>2. Игровой процесс и мир</h3></div>
                 <ul class="rule-list">
-                    <li class="rule-item"><span class="rule-num">2.1</span><div class="rule-text"><strong>Гриферство</strong> — запрещено разрушать или изменять чужие постройки.<div class="rule-pen">Бан 7 дней — Перм + откат</div></div></li>
-                    <li class="rule-item"><span class="rule-num">2.2</span><div class="rule-text"><strong>Воровство</strong> — запрещено брать из чужих сундуков, печек, шалкеров.<div class="rule-pen">Бан 3–14 дней + возврат</div></div></li>
-                    <li class="rule-item"><span class="rule-num">2.3</span><div class="rule-text"><strong>Ландшафт</strong> — запрещены столбы, недорубленные деревья, бесцельные разливы.<div class="rule-pen">Предупреждение / Повт: Бан 1 день</div></div></li>
-                    <li class="rule-item"><span class="rule-num">2.4</span><div class="rule-text"><strong>Территории</strong> — нельзя строиться вплотную к чужой базе.<div class="rule-pen">Снос + Бан 1 день</div></div></li>
+                    <li class="rule-item"><span class="rule-num">2.1</span>
+                        <div class="rule-text"><strong>Гриферство</strong> — разрушение, поджог, подрыв, затопление или любое изменение чужих построек без явного разрешения владельца строго запрещено. Распространяется на постройки любой стадии готовности.
+                        <div class="rule-pen"><span class="pen pen-ban">Бан 14 дней</span><span class="pen pen-kick">Полный откат</span><span class="pen pen-perm">Масштабный гриф: Перм. бан</span></div></div>
+                    </li>
+                    <li class="rule-item"><span class="rule-num">2.2</span>
+                        <div class="rule-text"><strong>Воровство</strong> — запрещено брать предметы из сундуков, печей, шалкеров, воронок и любых других контейнеров без разрешения. Включая выбитые с мобов предметы внутри чужой фермы.
+                        <div class="rule-pen"><span class="pen pen-ban">Бан 7–21 день</span><span class="pen pen-kick">Полный возврат</span></div></div>
+                    </li>
+                    <li class="rule-item"><span class="rule-num">2.3</span>
+                        <div class="rule-text"><strong>Порча ландшафта</strong> — запрещены: столбы из одиночных блоков, недорубленные деревья (висящие листья), бесцельные разливы лавы и воды, дыры в земле без засыпки. Нарушения должны быть устранены самостоятельно.
+                        <div class="rule-pen"><span class="pen pen-warn">Предупреждение + исправление</span><span class="pen pen-ban">Повторно: Бан 3 дня</span></div></div>
+                    </li>
+                    <li class="rule-item"><span class="rule-num">2.4</span>
+                        <div class="rule-text"><strong>Нарушение границ территорий</strong> — строиться в радиусе 150 блоков от чужой базы без разрешения запрещено. При споре приоритет у того, кто пришёл первым.
+                        <div class="rule-pen"><span class="pen pen-kick">Снос постройки</span><span class="pen pen-ban">Бан 3 дня</span></div></div>
+                    </li>
+                    <li class="rule-item"><span class="rule-num">2.5</span>
+                        <div class="rule-text"><strong>Порча общественных объектов</strong> — запрещено ломать, перестраивать или присваивать фермы, дороги, порталы и другие постройки общего пользования.
+                        <div class="rule-pen"><span class="pen pen-ban">Бан 14–30 дней</span><span class="pen pen-kick">Откат + возврат</span></div></div>
+                    </li>
                 </ul>
             </div>
+
+            <!-- 3. PvP -->
             <div class="rule-card">
-                <div class="rule-card-head"><span class="rule-card-ico">⚔️</span><h3>3. Боевые действия</h3></div>
+                <div class="rule-card-head"><span class="rule-card-ico">⚔️</span><h3>3. PvP и боевые действия</h3></div>
                 <ul class="rule-list">
-                    <li class="rule-item"><span class="rule-num">3.1</span><div class="rule-text"><strong>PvP без согласия</strong> — запрещено нападать без договорённости.<div class="rule-pen">Бан 2–5 дней + возврат вещей</div></div></li>
-                    <li class="rule-item"><span class="rule-num">3.2</span><div class="rule-text"><strong>Начало PvP</strong> — если игрок обманул вас, то разрешено напасть на игрока.<div class="rule-pen">НАКАЗАНИЕ ОТСУТСТВУЕТ</div></div></li>
-                    <li class="rule-item"><span class="rule-num">3.3</span><div class="rule-text"><strong>Убийство питомцев</strong> — намеренное убийство чужих животных.<div class="rule-pen">Бан 7 дней</div></div></li>
-                    <li class="rule-item"><span class="rule-num">3.4</span><div class="rule-text"><strong>Ловушки</strong> — запрещены ловушки, убивающие при входе/ТП.<div class="rule-pen">Бан 14 дней</div></div></li>
+                    <li class="rule-item"><span class="rule-num">3.1</span>
+                        <div class="rule-text"><strong>PvP без согласия</strong> — нападать на игрока можно только при взаимном устном или письменном согласии на бой. Нападение исподтишка, во время строительства или AFK — отягчающее обстоятельство.
+                        <div class="rule-pen"><span class="pen pen-ban">Бан 5–10 дней</span><span class="pen pen-kick">Полный возврат вещей</span></div></div>
+                    </li>
+                    <li class="rule-item"><span class="rule-num">3.2</span>
+                        <div class="rule-text"><strong>Убийство в ответ на обман</strong> — если игрок нарушил договорённость или обманул, атаковавшая сторона вправе ответить. Доказательства обязательны.
+                        <div class="rule-pen"><span class="pen pen-none">Без наказания при наличии доказательств</span></div></div>
+                    </li>
+                    <li class="rule-item"><span class="rule-num">3.3</span>
+                        <div class="rule-text"><strong>Убийство питомцев и животных</strong> — намеренное убийство прирученных животных, лошадей, именованных мобов приравнивается к гриферству.
+                        <div class="rule-pen"><span class="pen pen-ban">Бан 7–14 дней</span><span class="pen pen-kick">Компенсация</span></div></div>
+                    </li>
+                    <li class="rule-item"><span class="rule-num">3.4</span>
+                        <div class="rule-text"><strong>Ловушки</strong> — ловушки убивающие игрока при телепортации (/home, /warp, /tpa), входе на базу или через замаскированный тп-запрос строго запрещены.
+                        <div class="rule-pen"><span class="pen pen-ban">Бан 21 день</span><span class="pen pen-kick">Полный возврат</span></div></div>
+                    </li>
+                    <li class="rule-item"><span class="rule-num">3.5</span>
+                        <div class="rule-text"><strong>Кэмпинг точки респауна</strong> — намеренное ожидание игрока у его точки спауна или /home с целью убийства запрещено.
+                        <div class="rule-pen"><span class="pen pen-ban">Бан 7 дней</span><span class="pen pen-kick">Возврат вещей</span></div></div>
+                    </li>
                 </ul>
             </div>
+
+            <!-- 4. Техника и читы -->
             <div class="rule-card">
-                <div class="rule-card-head"><span class="rule-card-ico">🖥️</span><h3>4. Техническая часть</h3></div>
+                <div class="rule-card-head"><span class="rule-card-ico">🖥️</span><h3>4. Читы и технические нарушения</h3></div>
                 <ul class="rule-list">
-                    <li class="rule-item"><span class="rule-num">4.1</span><div class="rule-text"><strong>Читы</strong> — X-Ray, Fly, KillAura и любые читы строго запрещены.<div class="rule-pen red">Перм. бан без права разбана</div></div></li>
-                    <li class="rule-item"><span class="rule-num">4.2</span><div class="rule-text"><strong>Лаг-машины</strong> — запрещено нагружать сервер намеренно.<div class="rule-pen red">Перм. бан</div></div></li>
-                    <li class="rule-item"><span class="rule-num">4.3</span><div class="rule-text"><strong>Багоюз</strong> — использование критических багов (дюп и т.д.).<div class="rule-pen red">Бан 30 дней — Перм.</div></div></li>
+                    <li class="rule-item"><span class="rule-num">4.1</span>
+                        <div class="rule-text"><strong>Читерское ПО</strong> — использование любых читов категорически запрещено: X-Ray, Fly, KillAura, AutoClicker, ESP, Speed, NoFall и любые другие модификации дающие игровое преимущество. Запрет распространяется на все версии — включая Fabric и Forge-моды.
+                        <div class="rule-pen"><span class="pen pen-perm">Перм. бан без права разбана</span></div></div>
+                    </li>
+                    <li class="rule-item"><span class="rule-num">4.2</span>
+                        <div class="rule-text"><strong>Лаг-машины</strong> — запрещено создавать механизмы намеренно перегружающие сервер: бесконечные часовые механизмы без ограничителей, спам сущностей, массовое размножение животных сверх разумного предела (более 30 особей на чанк).
+                        <div class="rule-pen"><span class="pen pen-perm">Перм. бан</span><span class="pen pen-kick">Снос механизма</span></div></div>
+                    </li>
+                    <li class="rule-item"><span class="rule-num">4.3</span>
+                        <div class="rule-text"><strong>Багоюз</strong> — использование багов игры в корыстных целях запрещено. Особенно: дюпликация предметов, выход за границы мира, пролёт сквозь блоки. Найденный баг необходимо сообщить администрации.
+                        <div class="rule-pen"><span class="pen pen-ban">Бан 30 дней</span><span class="pen pen-perm">Умышленный: Перм. бан</span><span class="pen pen-kick">Изъятие задюпленных предметов</span></div></div>
+                    </li>
+                    <li class="rule-item"><span class="rule-num">4.4</span>
+                        <div class="rule-text"><strong>АФК-машины и автоклик</strong> — использование АФК-машин, кнопок, рычагов и физических устройств для симуляции присутствия в игре дольше 2 часов подряд запрещено.
+                        <div class="rule-pen"><span class="pen pen-ban">Бан 3–7 дней</span><span class="pen pen-kick">Сброс накопленных ресурсов</span></div></div>
+                    </li>
+                    <li class="rule-item"><span class="rule-num">4.5</span>
+                        <div class="rule-text"><strong>Альтернативные аккаунты</strong> — использование альт-аккаунтов для обхода бана, увеличения лимита сущностей или получения привилегий второй раз запрещено.
+                        <div class="rule-pen"><span class="pen pen-perm">Перм. бан основного и альт-аккаунта</span></div></div>
+                    </li>
                 </ul>
+            </div>
+
+        </div>
+
+        <!-- ════ CLAN RULES ════ -->
+        <div class="rv d2" style="margin-top:2.5rem">
+            <div class="sec-eyebrow" style="margin-bottom:.6rem">⚔️ Клановая система</div>
+            <div style="font-family:'Audiowide',monospace;font-size:clamp(1.2rem,3vw,1.8rem);color:var(--text);margin-bottom:.5rem">Правила кланов</div>
+            <p class="sec-desc">Дополнительные правила для клановых механик. Основные правила сервера имеют приоритет.</p>
+        </div>
+
+        <!-- Раздел 1: Основы -->
+        <div class="clan-head rv">
+            <div class="clan-head-ico">⚔️</div>
+            <div><h3>Раздел 1 — Основы кланов</h3><p>Создание, состав и ответственность</p></div>
+        </div>
+        <div class="clan-rules-grid rv d1">
+            <div class="clan-card">
+                <div class="clan-rule">
+                    <span class="clan-rule-num">1.1</span>
+                    <strong>Создание клана</strong> — Название до 16 символов, тег до 4. Запрещены названия с матом, оскорблениями или имитацией администрации.
+                    <div class="rule-pen"><span class="pen pen-warn">Предупреждение</span><span class="pen pen-kick">Роспуск клана</span></div>
+                </div>
+                <div class="clan-rule">
+                    <span class="clan-rule-num">1.2</span>
+                    <strong>Состав</strong> — Максимум <em>20 игроков</em>. Вступить только по приглашению. Нельзя состоять в двух кланах одновременно.
+                </div>
+                <div class="clan-rule">
+                    <span class="clan-rule-num">1.3</span>
+                    <strong>Роли</strong> — <em>Владелец</em> (полный контроль), <em>Офицер</em> (приглашения, кики, войны, альянсы), <em>Участник</em> (базовые права).
+                </div>
+            </div>
+            <div class="clan-card">
+                <div class="clan-rule">
+                    <span class="clan-rule-num">1.4</span>
+                    <strong>Ответственность лидера</strong> — Лидер отвечает за действия участников. Систематические нарушения = роспуск клана.
+                    <div class="rule-pen"><span class="pen pen-kick">Роспуск клана</span><span class="pen pen-ban">Бан лидера 3–7 дней</span></div>
+                </div>
             </div>
         </div>
+
+        <!-- Раздел 2: Войны -->
+        <div class="clan-head rv">
+            <div class="clan-head-ico">🗡️</div>
+            <div><h3>Раздел 2 — Войны</h3><p>Объявление, ведение и завершение войн</p></div>
+        </div>
+        <div class="clan-rules-grid rv d1">
+            <div class="clan-card">
+                <div class="clan-rule">
+                    <span class="clan-rule-num">2.1</span>
+                    <strong>Объявление войны</strong> — Только через <em>/clan war declare</em>. Нападение до принятия = PvP без согласия.
+                    <div class="rule-pen"><span class="pen pen-ban">Бан 2–5 дней</span><span class="pen pen-kick">Возврат вещей</span></div>
+                </div>
+                <div class="clan-rule">
+                    <span class="clan-rule-num">2.2</span>
+                    <strong>Ведение войны</strong> — После принятия PvP разрешён везде. Гриф и воровство на базе врага остаются запрещены.
+                    <div class="rule-pen"><span class="pen pen-ban">Бан 7–14 дней</span></div>
+                </div>
+                <div class="clan-rule">
+                    <span class="clan-rule-num">2.5</span>
+                    <strong>Мир</strong> — Через <em>/clan war peace</em>, вступает в силу после принятия обеими сторонами.
+                </div>
+            </div>
+            <div class="clan-card">
+                <div class="clan-rule">
+                    <span class="clan-rule-num">2.3</span>
+                    <strong>Ловушки</strong> — Боевые ловушки на открытой местности разрешены. TP-ловушки запрещены всегда, даже во время войны.
+                    <div class="rule-pen"><span class="pen pen-ban">Бан 14 дней</span></div>
+                </div>
+                <div class="clan-rule">
+                    <span class="clan-rule-num">2.4</span>
+                    <strong>Минимальная длительность</strong> — Нельзя объявить войну и сразу запросить мир чтобы обойти правило PvP. Минимум <em>24 часа</em>.
+                    <div class="rule-pen"><span class="pen pen-ban">Бан 3–7 дней</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Раздел 3: Альянсы -->
+        <div class="clan-head rv">
+            <div class="clan-head-ico">🤝</div>
+            <div><h3>Раздел 3 — Альянсы</h3><p>Союзы между кланами</p></div>
+        </div>
+        <div class="clan-rules-grid rv d1">
+            <div class="clan-card">
+                <div class="clan-rule">
+                    <span class="clan-rule-num">3.1</span>
+                    <strong>Заключение</strong> — Через <em>/clan ally invite</em>. Максимум <em>5 альянсов</em>. Нельзя состоять в альянсе с кланом, с которым идёт война.
+                </div>
+                <div class="clan-rule">
+                    <span class="clan-rule-num">3.2</span>
+                    <strong>Права союзников</strong> — Friendly-fire отключён. Других автоматических привилегий нет — доступ на базу даётся лично.
+                </div>
+            </div>
+            <div class="clan-card">
+                <div class="clan-rule">
+                    <span class="clan-rule-num">3.3</span>
+                    <strong>Предательство союзника</strong> — Атака, гриф или воровство на базе союзного клана карается строже обычного.
+                    <div class="rule-pen"><span class="pen pen-ban">Бан 14 дней</span><span class="pen pen-kick">Возврат</span><span class="pen pen-kick">Разрыв альянса</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Раздел 4: Торговля -->
+        <div class="clan-head rv">
+            <div class="clan-head-ico">💰</div>
+            <div><h3>Раздел 4 — Торговля</h3><p>Честные сделки между игроками</p></div>
+        </div>
+        <div class="clan-rules-grid rv d1">
+            <div class="clan-card">
+                <div class="clan-rule">
+                    <span class="clan-rule-num">4.1</span>
+                    <strong>Честная торговля</strong> — Мошенничество вне системы <em>/trade</em> (обман при дропе, ложные договорённости) запрещено.
+                    <div class="rule-pen"><span class="pen pen-ban">Бан 3–7 дней</span><span class="pen pen-kick">Возврат</span></div>
+                </div>
+                <div class="clan-rule">
+                    <span class="clan-rule-num">4.3</span>
+                    <strong>Трейд во время войны</strong> — Торговля с врагом не запрещена, но на ваш риск. Споры между воюющими кланами администрация не разбирает.
+                    <div class="rule-pen"><span class="pen pen-none">Без наказания</span></div>
+                </div>
+            </div>
+            <div class="clan-card">
+                <div class="clan-rule">
+                    <span class="clan-rule-num">4.2</span>
+                    <strong>Отказ от сделки</strong> — Принял предметы и не выполнил обязательство = мошенничество. Переписка в чате является доказательством.
+                    <div class="rule-pen"><span class="pen pen-ban">Бан 3 дня</span><span class="pen pen-kick">Возврат</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Раздел 5: Общие -->
+        <div class="clan-head rv">
+            <div class="clan-head-ico">📜</div>
+            <div><h3>Раздел 5 — Общие положения</h3></div>
+        </div>
+        <div class="clan-note rv">
+            <strong>5.1</strong> Основные правила сервера имеют приоритет над клановыми в любом спорном случае.<br>
+            <strong>5.2</strong> Жалобы разбираются в Discord. Без скриншотов и доказательств — не рассматриваются.<br>
+            <strong>5.3</strong> Решение администрации финальное. Оспорить можно у главного администратора в Telegram — <a href="https://t.me/vexlorwww" target="_blank" style="color:var(--mint)">@vexlorwww</a>.<br><br>
+            ⚠️ <strong>Все убийства и передачи предметов логируются. Незнание правил не освобождает от ответственности.</strong>
+        </div>
+
         <div class="rule-info rv d2">
             <div class="rule-info-ico">ℹ️</div>
             <div class="rule-info-body">
@@ -173,36 +441,6 @@
     </div>
 </section>
 
-<!-- WHITELIST -->
-<section id="whitelist" class="section">
-    <div class="container">
-        <div class="sec-head rv">
-            <div class="sec-eyebrow">📋 Раздел 2</div>
-            <h2 class="sec-title">Анкета на вайтлист</h2>
-            <p class="sec-desc">Заполни анкету — администраторы рассмотрят заявку и напишут тебе в Discord.</p>
-        </div>
-        <div class="form-box rv d1">
-            <form id="wl-form" onsubmit="submitForm(event,'whitelist')">
-                <div class="form-grid">
-                    <div class="fg"><label>Ник в Minecraft *</label><input type="text" name="minecraft_nick" placeholder="Steve_1337" required/></div>
-                    <div class="fg"><label>Discord (username или тег) *</label><input type="text" name="discord" placeholder="username или user#0000" required/></div>
-                    <div class="fg"><label>Возраст *</label><input type="number" name="age" placeholder="16" min="10" max="99" required/></div>
-                    <div class="fg"><label>Часов в Minecraft *</label><input type="text" name="hours" placeholder="500+" required/></div>
-                    <div class="fg full"><label>Откуда узнал о сервере *</label><select name="source" required><option value="" disabled selected>Выбери вариант</option><option>Discord</option><option>От друга</option><option>Telegram</option><option>Reddit / Форум</option><option>YouTube / Twitch</option><option>Другое</option></select></div>
-                    <div class="fg full"><label>Расскажи о себе как об игроке *</label><textarea name="about" rows="4" placeholder="Чем занимаешься в майнкрафте? Стиль игры? Планы на сервере?" required></textarea></div>
-                    <div class="fg full"><label>Почему хочешь на STILLWILD? *</label><textarea name="why" rows="4" placeholder="Что привлекает именно в нашем проекте?" required></textarea></div>
-                    <div class="fg"><label>Были ли баны на других серверах?</label><select name="bans"><option value="Нет">Нет, чистая история</option><option value="Да (давно)">Да, но давно</option><option value="Да (объясню)">Да, готов объяснить</option></select></div>
-                    <div class="fg"><label>Дополнительно</label><input type="text" name="extra" placeholder="Что-то важное... (необязательно)"/></div>
-                </div>
-                <div class="form-foot">
-                    <label class="chk-label"><input type="checkbox" required/><span>Я прочитал правила STILLWILD и обязуюсь их соблюдать</span></label>
-                    <button type="submit" class="btn-submit">Отправить заявку →</button>
-                </div>
-            </form>
-            <div id="whitelist-ok" class="form-success hidden"><div class="sico">📋</div><h3>Заявка отправлена!</h3><p>Администраторы рассмотрят анкету и свяжутся с тобой в Discord.<br>Обычно ответ приходит в течение 24 часов.</p></div>
-        </div>
-    </div>
-</section>
 
 <!-- ADMIN APPLICATION -->
 <section id="admin" class="section alt">
@@ -331,6 +569,34 @@
                 <a href="#contact" class="don-btn">Заказать ивент →</a>
             </div>
 
+            <!-- ── Разбан ── -->
+            <div class="don-card">
+                <div class="don-ico">🔓</div>
+                <div class="don-price">199 <sup>₽</sup></div>
+                <div class="don-name">Разбан</div>
+                <div class="don-desc">Был заблокирован на сервере? Купи разбан и вернись в игру. Не распространяется на перманентные баны за читы.</div>
+                <ul class="don-feats">
+                    <li>Снятие активного бана</li>
+                    <li>Не действует при бане за читы (4.1)</li>
+                    <li>Активируется в течение 24 часов</li>
+                </ul>
+                <a href="#contact" class="don-btn">Купить разбан →</a>
+            </div>
+
+            <!-- ── Размут ── -->
+            <div class="don-card">
+                <div class="don-ico">🔈</div>
+                <div class="don-price">99 <sup>₽</sup></div>
+                <div class="don-name">Размут</div>
+                <div class="don-desc">Замутили в чате? Купи размут и снова общайся с другими игроками без ожидания окончания срока.</div>
+                <ul class="don-feats">
+                    <li>Снятие активного мута</li>
+                    <li>Доступно при любом сроке мута</li>
+                    <li>Мгновенная активация</li>
+                </ul>
+                <a href="#contact" class="don-btn">Купить размут →</a>
+            </div>
+
             <!-- ── Sponsor ── -->
             <div class="don-card gold">
                 <div class="don-featured">⭐ Sponsor</div>
@@ -394,8 +660,7 @@
     <div class="foot-logo">STILL<span class="lo">WILD</span></div>
     <div class="foot-links">
         <a href="#rules">Правила</a>
-        <a href="#whitelist">Вайтлист</a>
-        <a href="#donate">Донаты</a>
+            <a href="#donate">Донаты</a>
         <a href="https://t.me/StillWildSMP" target="_blank">✈️ Telegram</a>
         <a href="https://discord.gg/tPbwJnRn"  target="_blank">💬 Discord</a>
         <a href="https://t.me/vexlorwww"       target="_blank">📨 Главный Админ</a>
