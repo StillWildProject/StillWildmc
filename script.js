@@ -321,3 +321,49 @@ async function sendResultWebhook(action, payload, reason) {
     });
     return res.ok;
 }
+
+/* =========================================================
+   SPONSOR DISCOUNT COUNTDOWN (10 days)
+   ========================================================= */
+(function initSponsorCountdown() {
+    const timerRoot = document.getElementById('sponsor-countdown');
+    if (!timerRoot) return;
+
+    const timeEl = timerRoot.querySelector('[data-time-left]');
+    if (!timeEl) return;
+
+    const STORAGE_KEY = 'stillwild_sponsor_discount_deadline_v1';
+    const TEN_DAYS_MS = 10 * 24 * 60 * 60 * 1000;
+
+    let deadline = Number(localStorage.getItem(STORAGE_KEY));
+    if (!deadline || Number.isNaN(deadline) || deadline <= Date.now()) {
+        deadline = Date.now() + TEN_DAYS_MS;
+        localStorage.setItem(STORAGE_KEY, String(deadline));
+    }
+
+    function pad(value) {
+        return String(value).padStart(2, '0');
+    }
+
+    function render() {
+        const left = deadline - Date.now();
+        if (left <= 0) {
+            timerRoot.classList.add('ended');
+            timeEl.textContent = '00д 00:00:00';
+            return false;
+        }
+
+        const days = Math.floor(left / (24 * 60 * 60 * 1000));
+        const hours = Math.floor((left % (24 * 60 * 60 * 1000)) / (60 * 60 * 1000));
+        const mins = Math.floor((left % (60 * 60 * 1000)) / (60 * 1000));
+        const secs = Math.floor((left % (60 * 1000)) / 1000);
+
+        timeEl.textContent = `${days}д ${pad(hours)}:${pad(mins)}:${pad(secs)}`;
+        return true;
+    }
+
+    render();
+    const tid = setInterval(() => {
+        if (!render()) clearInterval(tid);
+    }, 1000);
+})();
