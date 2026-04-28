@@ -546,3 +546,30 @@ button,input,textarea,select{font-family:var(--ff-body)}
     .info-grid{grid-template-columns:1fr}
     .action-btns{flex-direction:column}
 }
+/* Стиль для зачеркнутой цены */
+.old-price {
+    text-decoration: line-through;
+    color: rgba(255, 255, 255, 0.4); /* Полупрозрачный белый */
+    font-size: 0.7em;
+    margin-right: 5px;
+}
+
+/* Бейдж со скидкой */
+.sale-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #ff4757; /* Яркий красный */
+    color: white;
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 14px;
+    box-shadow: 0 2px 10px rgba(255, 71, 87, 0.3);
+    z-index: 2;
+}
+
+/* Относительное позиционирование для карточки, чтобы бейдж не улетел */
+.don-card {
+    position: relative;
+}
