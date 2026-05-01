@@ -23,6 +23,47 @@
         }
         .don-price.amber{color:var(--amber);text-shadow:0 0 18px rgba(255,179,71,.35)}
         .don-price sup{font-size:.65rem;margin-top:.2rem;opacity:.75}
+        .sponsor-price{
+            display:flex;align-items:flex-end;gap:.8rem;flex-wrap:wrap;
+            margin:.3rem 0 .8rem;
+        }
+        .sponsor-price-old{
+            font-family:'Audiowide',monospace;font-size:1.05rem;font-weight:700;
+            color:#7d8797;opacity:.9;position:relative;line-height:1;
+        }
+        .sponsor-price-old::after{
+            content:'';position:absolute;left:-2px;right:-2px;top:52%;
+            height:2px;background:#8a96a8;border-radius:2px;
+            box-shadow:0 0 10px rgba(138,150,168,.35);
+        }
+        .sponsor-price-new{
+            font-family:'Audiowide',monospace;font-size:2.1rem;font-weight:700;line-height:1;
+            color:var(--amber);letter-spacing:1px;
+            text-shadow:0 0 22px rgba(255,179,71,.45);
+        }
+        .sponsor-price-new small{
+            font-size:.56em;margin-left:2px;opacity:.95;
+        }
+        .sponsor-discount{
+            display:inline-flex;align-items:center;justify-content:center;
+            border-radius:999px;padding:.55rem 1rem;margin:.35rem 0 .8rem;
+            background:rgba(255,71,87,.12);border:1px solid rgba(255,71,87,.45);
+            color:#ff6b78;font-family:'Audiowide',monospace;font-size:1.05rem;letter-spacing:1px;
+            box-shadow:0 0 18px rgba(255,71,87,.2), inset 0 0 12px rgba(255,71,87,.12);
+        }
+        .sponsor-discount strong{color:#ff4f68}
+        .sponsor-timer{
+            width:fit-content;min-width:205px;padding:.8rem 1rem;margin:0 0 1rem;
+            background:rgba(7,10,15,.75);border:1px solid rgba(255,255,255,.1);
+            border-radius:18px;
+        }
+        .sponsor-timer .lbl{
+            font-size:.76rem;letter-spacing:1.4px;text-transform:uppercase;color:var(--text-3);margin-bottom:.2rem;
+        }
+        .sponsor-timer .val{
+            font-family:'Audiowide',monospace;font-size:1.05rem;color:var(--amber);
+            text-shadow:0 0 14px rgba(255,179,71,.3);
+        }
 
         /* ── Donate grid ── */
         .donate-grid{
@@ -101,14 +142,12 @@
         <li><a href="#donate">Донаты</a></li>
         <li><a href="#contact">Связь</a></li>
         <li><a href="https://stillwildproject.github.io/archivebanned">Архив Наказаний</a></li>
-        <li><a href="https://stillwildproject.github.io/TiersPvP" target="_blank" rel="noopener">🏆 TiersList StillWild</a></li>
     </ul>
     <div class="nav-right">
         <div class="nav-social">
             <a href="https://t.me/StillWildSMP" target="_blank" rel="noopener" title="Telegram канал">✈️</a>
             <a href="https://discord.gg/tPbwJnRn"  target="_blank" rel="noopener" title="Discord сервер">💬</a>
             <a href="https://stillwildproject.github.io/archivebanned" target="_blank" rel="noopener" title="Архив Наказаний">💭</a>
-            <a href="https://stillwildproject.github.io/TiersPvP" target="_blank" rel="noopener" title="TiersList StillWild">🏆</a>
         </div>
         <button class="burger" id="burger" aria-label="Меню">
             <span></span><span></span><span></span>
@@ -165,7 +204,6 @@
                     <a href="https://discord.gg/tPbwJnRn" target="_blank" class="hc-social-link"><span class="sl-ico">💬</span> Discord сервер<span class="sl-arr">→</span></a>
                     <a href="https://t.me/vexlorwww" target="_blank" class="hc-social-link"><span class="sl-ico">📨</span> Главный администратор<span class="sl-arr">→</span></a>
                     <a href="https://stillwildproject.github.io/archivebanned" target="_blank" class="hc-social-link"><span class="sl-ico">💭</span> Архив Наказаний<span class="sl-arr">→</span></a>
-                    <a href="https://stillwildproject.github.io/TiersPvP" target="_blank" class="hc-social-link"><span class="sl-ico">🏆</span> TiersList StillWild<span class="sl-arr">→</span></a>
                 </div>
             </div>
         </div>
@@ -573,34 +611,42 @@
             </div>
 
 
-            <!-- ── Sponsor ── -->
-            <div class="don-card gold">
-                <div class="don-featured">⭐ Sponsor</div>
-                <div class="don-ico">🌊</div>
-                <div class="don-price amber">1 999 <sup>₽</sup></div>
-                <div class="don-name">Sponsor</div>
-                <div class="don-desc">Полный пакет привилегий для преданных игроков. Максимум удобства без нарушения баланса.</div>
-                <ul class="don-feats">
-                <li>💬 Чат с администрацией</li>
-                <li>🍖 Утоление голода (/feed)</li>
-                <li>🔨 Открывает кузнечный стол (/smithingtable)</li>
-                <li>🧶 Открывает ткацкий станок (/loom)</li>
-                <li>🗺️ Открывает стол картографа (/cartographytable)</li>
-                <li>🪨 Открывает интерфейс точила (/grindstone)</li>
-                <li>🔨 Открывает виртуальную наковальню (/anvil)</li>
-                <li>✂️ Открывает камнерез (/stonecutter)</li>
-                <li>📦 Виртуальный эндер-сундук (/ec)</li>
-                <li>🛠️ Переносной верстак (/wb)</li>
-                <li>🏠 До <strong>10 точек дома</strong></li>
-                </ul>
-                <div class="don-bonus">
-                    <h5>🎁 Бонусы при покупке</h5>
-                    <div class="bon-item">🔑 Вход на полный сервер</div>
-                    <div class="bon-item">💰 +5.000$ на стартовый баланс</div>
-                    <div class="bon-item hi">🏷️ Уникальный аквамариновый тег</div>
-                </div>
-                <a href="#contact" class="don-btn gold">Стать спонсором →</a>
-            </div>
+            <!-- ── Sponsor ── -->
+            <div class="don-card gold">
+                <div class="don-featured">⭐ Sponsor</div>
+                <div class="don-ico">🌊</div>
+                <div class="sponsor-price">
+                    <div class="sponsor-price-old">1999₽</div>
+                    <div class="sponsor-price-new">999<small>₽</small></div>
+                </div>
+                <div class="sponsor-discount"><strong>50%</strong>&nbsp;СКИДКА</div>
+                <div class="sponsor-timer">
+                    <div class="lbl">До конца скидки</div>
+                    <div class="val">9д 23:48:18</div>
+                </div>
+                <div class="don-name">Sponsor</div>
+                <div class="don-desc">Полный пакет привилегий для преданных игроков. Максимум удобства без нарушения баланса.</div>
+                <ul class="don-feats">
+                    <li>💬 Чат с администрацией</li>
+                    <li>🍖 Утоление голода (/feed)</li>
+                    <li>🔨 Открывает кузнечный стол (/smithingtable)</li>
+                    <li>🧶 Открывает ткацкий станок (/loom)</li>
+                    <li>🗺️ Открывает стол картографа (/cartographytable)</li>
+                    <li>🪨 Открывает интерфейс точила (/grindstone)</li>
+                    <li>🔨 Открывает виртуальную наковальню (/anvil)</li>
+                    <li>✂️ Открывает камнерез (/stonecutter)</li>
+                    <li>📦 Виртуальный эндер-сундук (/ec)</li>
+                    <li>🛠️ Переносной верстак (/wb)</li>
+                    <li>🏠 До <strong>10 точек дома</strong></li>
+                </ul>
+                <div class="don-bonus">
+                    <h5>🎁 Бонусы при покупке</h5>
+                    <div class="bon-item">🔑 Вход на полный сервер</div>
+                    <div class="bon-item">💰 +5.000$ на стартовый баланс</div>
+                    <div class="bon-item hi">🏷️ Уникальный аквамариновый тег</div>
+                </div>
+                <a href="#contact" class="don-btn gold">Стать спонсором →</a>
+            </div>
 
         </div><!-- /donate-grid -->
     </div>
@@ -648,7 +694,6 @@
         <a href="https://discord.gg/tPbwJnRn"  target="_blank">💬 Discord</a>
         <a href="https://t.me/vexlorwww"       target="_blank">📨 Главный Админ</a>
         <a href="https://stillwildproject.github.io/archivebanned" target="_blank">💭 Архив Наказаний</a>
-        <a href="https://stillwildproject.github.io/TiersPvP" target="_blank">🏆 TiersList StillWild</a>
     </div>
     <p class="foot-copy">© 2026 STILLWILD · Не аффилирован с Mojang Studios</p>
 </footer>
