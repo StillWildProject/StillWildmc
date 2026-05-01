@@ -356,13 +356,6 @@ button,input,textarea,select{font-family:var(--ff-body)}
     display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
     gap:1.5rem;max-width:800px;margin:0 auto;
 }
-.don-pair{
-    grid-column:1/-1;
-    display:grid;
-    grid-template-columns:repeat(2,minmax(0,1fr));
-    gap:1.5rem;
-    align-items:start;
-}
 .don-card{
     background:var(--bg3);border:1px solid var(--border);border-radius:var(--r-lg);
     padding:2rem;position:relative;overflow:hidden;transition:.25s;
@@ -372,73 +365,6 @@ button,input,textarea,select{font-family:var(--ff-body)}
 .don-card.gold:hover{border-color:rgba(255,179,71,.5)}
 .don-card::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at top right,rgba(0,255,176,.05),transparent 60%)}
 .don-card.gold::before{background:radial-gradient(circle at top right,rgba(255,179,71,.07),transparent 60%)}
-.sponsor-card{
-    box-shadow:0 0 0 1px rgba(255,179,71,.18),0 14px 40px rgba(0,0,0,.35);
-}
-.sponsor-card:hover{
-    transform:translateY(-6px) scale(1.01);
-    box-shadow:0 0 0 1px rgba(255,179,71,.35),0 20px 52px rgba(255,179,71,.16);
-}
-.sponsor-meta{
-    position:absolute;
-    top:70px;
-    right:16px;
-    z-index:3;
-    display:flex;
-    flex-direction:column;
-    align-items:flex-end;
-    gap:.5rem;
-}
-.sponsor-sale-pill{
-    display:inline-flex;
-    align-items:center;
-    gap:.35rem;
-    padding:.34rem .72rem;
-    border-radius:999px;
-    border:1px solid rgba(255,71,87,.58);
-    background:linear-gradient(135deg,rgba(255,71,87,.22),rgba(255,71,87,.08));
-    color:#ff9ca5;
-    font-size:.72rem;
-    font-weight:600;
-    letter-spacing:.55px;
-    text-transform:uppercase;
-    box-shadow:0 0 0 1px rgba(255,71,87,.16) inset,0 0 14px rgba(255,71,87,.24);
-    backdrop-filter:blur(3px);
-}
-.sponsor-sale-pill span{
-    color:var(--red);
-    font-weight:800;
-    font-size:.84rem;
-    text-shadow:0 0 10px rgba(255,71,87,.34);
-}
-.sponsor-countdown{
-    display:flex;
-    flex-direction:column;
-    align-items:flex-end;
-    gap:.15rem;
-    padding:.38rem .62rem;
-    border-radius:10px;
-    border:1px solid rgba(255,255,255,.12);
-    background:rgba(10,16,24,.7);
-    backdrop-filter:blur(3px);
-}
-.sponsor-countdown .cd-label{
-    font-size:.58rem;
-    text-transform:uppercase;
-    letter-spacing:.8px;
-    color:var(--text-3);
-}
-.sponsor-countdown .cd-time{
-    font-family:var(--ff-display);
-    font-size:.72rem;
-    color:var(--amber);
-    letter-spacing:.4px;
-    text-shadow:0 0 8px rgba(255,179,71,.25);
-}
-.sponsor-countdown.ended .cd-time{
-    color:#ff9ca5;
-    text-shadow:none;
-}
 .don-featured{
     display:inline-flex;align-items:center;gap:.3rem;
     background:rgba(255,179,71,.12);border:1px solid rgba(255,179,71,.3);
@@ -451,35 +377,6 @@ button,input,textarea,select{font-family:var(--ff-body)}
 .don-feats{list-style:none;display:flex;flex-direction:column;gap:.4rem;margin-bottom:1.25rem}
 .don-feats li{font-size:.84rem;color:var(--text-2);display:flex;align-items:center;gap:.5rem}
 .don-feats li::before{content:'—';color:var(--text-3)}
-.sponsor-price{
-    display:flex;
-    flex-wrap:wrap;
-    align-items:baseline;
-    gap:.45rem .7rem;
-}
-.sponsor-price .old-price{
-    color:#8a96a8;
-    text-decoration:line-through;
-    text-decoration-thickness:2px;
-    opacity:.9;
-}
-.sponsor-price .new-price{
-    color:var(--amber);
-    font-size:1.55rem;
-    text-shadow:0 0 16px rgba(255,179,71,.45);
-}
-.sponsor-feats{
-    margin-top:.95rem;
-    margin-bottom:1.35rem;
-    gap:.55rem;
-}
-.sponsor-feats li{
-    align-items:flex-start;
-    line-height:1.45;
-}
-.sponsor-feats li::before{
-    content:none;
-}
 .don-bonus{
     background:rgba(255,179,71,.06);border:1px solid rgba(255,179,71,.15);
     border-radius:var(--r);padding:1rem;margin-bottom:1.25rem;
@@ -626,15 +523,6 @@ button,input,textarea,select{font-family:var(--ff-body)}
     /* Donate */
     .donate-grid{grid-template-columns:1fr}
     .don-card{padding:1.5rem}
-    .don-pair{grid-template-columns:1fr;gap:1rem}
-    .sponsor-meta{
-        position:static;
-        margin:.4rem 0 .7rem;
-        align-items:flex-start;
-    }
-    .sponsor-countdown{
-        align-items:flex-start;
-    }
 
     /* Contact */
     .contact-cards{gap:.6rem}
