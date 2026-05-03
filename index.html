@@ -790,7 +790,7 @@
                 <div class="sponsor-discount"><strong>50%</strong>&nbsp;СКИДКА</div>
                 <div class="sponsor-timer">
                     <div class="lbl">До конца скидки</div>
-                    <div class="val">9д 23:48:18</div>
+                    <div class="val" id="sponsor-countdown">—</div>
                 </div>
                 <div class="don-name">Sponsor</div>
                 <div class="don-desc">Полный пакет привилегий для преданных игроков. Максимум удобства без нарушения баланса.</div>
@@ -869,6 +869,41 @@
 
 <div id="toast"></div>
 
+<script>
+(function() {
+    // Скидка заканчивается через 5 дней с момента первой загрузки страницы
+    // Дата сохраняется в localStorage чтобы не сбрасывалась при перезагрузке
+    const KEY = 'sw_discount_end';
+    let end = localStorage.getItem(KEY);
+    if (!end) {
+        end = Date.now() + 5 * 24 * 60 * 60 * 1000;
+        localStorage.setItem(KEY, end);
+    }
+    end = parseInt(end);
+
+    function tick() {
+        const el = document.getElementById('sponsor-countdown');
+        if (!el) return;
+        const diff = end - Date.now();
+        if (diff <= 0) {
+            el.textContent = 'СКИДКА ЗАКОНЧИЛАСЬ';
+            el.style.color = '#ff4757';
+            el.style.fontSize = '.65rem';
+            return;
+        }
+        const d = Math.floor(diff / 86400000);
+        const h = Math.floor((diff % 86400000) / 3600000);
+        const m = Math.floor((diff % 3600000) / 60000);
+        const s = Math.floor((diff % 60000) / 1000);
+        el.textContent = (d > 0 ? d + 'д ' : '') +
+            String(h).padStart(2,'0') + ':' +
+            String(m).padStart(2,'0') + ':' +
+            String(s).padStart(2,'0');
+        setTimeout(tick, 1000);
+    }
+    tick();
+})();
+</script>
 <script src="tg-config.js"></script>
 <script src="script.js"></script>
 </body>
