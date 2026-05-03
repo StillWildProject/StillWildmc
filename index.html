@@ -125,6 +125,93 @@
             padding:.75rem 1rem;font-size:.78rem;color:var(--text-2);line-height:1.6;
         }
         .clan-note strong{color:var(--amber)}
+
+        /* ── Worlds section ── */
+        .worlds-grid{
+            display:grid;
+            grid-template-columns:repeat(3,1fr);
+            gap:1.5rem;
+        }
+        @media(max-width:900px){.worlds-grid{grid-template-columns:1fr 1fr}}
+        @media(max-width:580px){.worlds-grid{grid-template-columns:1fr}}
+
+        .world-card{
+            position:relative;overflow:hidden;
+            background:var(--bg2);border:1px solid var(--border);
+            border-radius:var(--r-lg);padding:1.75rem 1.5rem 1.5rem;
+            transition:transform .25s,box-shadow .25s,border-color .25s;
+        }
+        .world-card:hover{transform:translateY(-6px)}
+
+        .world-nether{border-color:rgba(255,80,40,.18)}
+        .world-nether:hover{border-color:rgba(255,80,40,.45);box-shadow:0 20px 60px rgba(255,60,20,.12)}
+        .world-end{border-color:rgba(170,80,255,.18)}
+        .world-end:hover{border-color:rgba(170,80,255,.45);box-shadow:0 20px 60px rgba(150,60,255,.12)}
+        .world-overworld{border-color:rgba(0,255,176,.18)}
+        .world-overworld:hover{border-color:rgba(0,255,176,.45);box-shadow:0 20px 60px rgba(0,255,130,.12)}
+
+        .world-glow{
+            position:absolute;top:-40px;right:-40px;
+            width:160px;height:160px;border-radius:50%;
+            background:radial-gradient(circle,rgba(0,255,176,.12) 0%,transparent 70%);
+            pointer-events:none;
+        }
+        .nether-glow{background:radial-gradient(circle,rgba(255,70,20,.15) 0%,transparent 70%)}
+        .end-glow{background:radial-gradient(circle,rgba(160,80,255,.15) 0%,transparent 70%)}
+
+        .world-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.1rem}
+
+        .world-ico-wrap{
+            width:48px;height:48px;border-radius:12px;
+            display:flex;align-items:center;justify-content:center;font-size:1.6rem;
+            flex-shrink:0;
+        }
+        .world-ico-green{background:rgba(0,255,176,.1);border:1px solid rgba(0,255,176,.2)}
+        .world-ico-red{background:rgba(255,70,20,.12);border:1px solid rgba(255,70,20,.25)}
+        .world-ico-purple{background:rgba(160,80,255,.12);border:1px solid rgba(160,80,255,.25)}
+
+        .world-badge{
+            display:inline-flex;align-items:center;gap:.3rem;
+            padding:.3rem .75rem;border-radius:50px;
+            font-size:.7rem;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+        }
+        .world-badge.open{
+            background:rgba(0,255,176,.1);border:1px solid rgba(0,255,176,.3);color:var(--mint);
+            animation:pulse-badge 2.5s ease-in-out infinite;
+        }
+        .world-badge.closed{
+            background:rgba(255,71,87,.1);border:1px solid rgba(255,71,87,.3);color:#ff4757;
+        }
+        @keyframes pulse-badge{
+            0%,100%{box-shadow:0 0 0 0 rgba(0,255,176,.25)}
+            50%{box-shadow:0 0 0 5px rgba(0,255,176,0)}
+        }
+
+        .world-name{
+            font-family:'Audiowide',monospace;
+            font-size:1.25rem;letter-spacing:.5px;
+            color:var(--text);margin-bottom:.5rem;
+        }
+        .world-desc{
+            font-size:.83rem;color:var(--text-2);line-height:1.6;margin-bottom:1.25rem;
+        }
+
+        .world-meta{
+            background:var(--surface);border:1px solid var(--border);
+            border-radius:var(--r);overflow:hidden;
+        }
+        .world-meta-row{
+            display:flex;align-items:center;justify-content:space-between;
+            padding:.55rem .9rem;font-size:.78rem;
+        }
+        .world-meta-row+.world-meta-row{border-top:1px solid var(--border)}
+        .world-meta-label{color:var(--text-3);text-transform:uppercase;letter-spacing:.5px;font-size:.7rem}
+        .world-meta-val{font-weight:600;color:var(--text)}
+        .open-val{color:var(--mint)}
+        .never-val{
+            color:var(--amber);font-family:'Audiowide',monospace;font-size:.72rem;
+            text-shadow:0 0 10px rgba(255,179,71,.35);
+        }
     </style>
 </head>
 <body>
@@ -197,7 +284,7 @@
                     <div class="hc-stat"><span class="hc-stat-label">Режим</span><span class="hc-stat-val">Survival SMP</span></div>
                     <div class="hc-stat"><span class="hc-stat-label">Версия</span><span class="hc-stat-val">Java 1.21.11+</span></div>
                     <div class="hc-stat"><span class="hc-stat-label">Тип</span><span class="hc-stat-val">Vanilla</span></div>
-                    <div class="hc-stat"><span class="hc-stat-label">Доступ</span><span class="hc-stat-val">evenyone</span></div>
+                    <div class="hc-stat"><span class="hc-stat-label">Доступ</span><span class="hc-stat-val">Whitelist</span></div>
                     <div class="hc-stat"><span class="hc-stat-label">Логирование</span><span class="hc-stat-val">CoreProtect</span></div>
                 </div>
                 <div class="hc-divider"></div>
@@ -210,6 +297,83 @@
                     <a href="https://stillwildproject.github.io/archivebanned" target="_blank" class="hc-social-link"><span class="sl-ico">💭</span> Архив Наказаний<span class="sl-arr">→</span></a>
                 </div>
             </div>
+        </div>
+    </div>
+</section>
+
+<!-- WORLDS -->
+<section id="worlds" class="section">
+    <div class="container">
+        <div class="sec-head rv">
+            <div class="sec-eyebrow">🌍 Измерения</div>
+            <h2 class="sec-title">Статус миров</h2>
+            <p class="sec-desc">Актуальное состояние всех измерений сервера STILLWILD.</p>
+        </div>
+        <div class="worlds-grid rv d1">
+
+            <!-- Overworld -->
+            <div class="world-card world-overworld">
+                <div class="world-glow"></div>
+                <div class="world-top">
+                    <div class="world-ico-wrap world-ico-green">🌿</div>
+                    <div class="world-badge open">● ОТКРЫТ</div>
+                </div>
+                <div class="world-name">Overworld</div>
+                <div class="world-desc">Основной мир. Здесь начинается история каждого игрока STILLWILD.</div>
+                <div class="world-meta">
+                    <div class="world-meta-row">
+                        <span class="world-meta-label">Статус</span>
+                        <span class="world-meta-val open-val">Открыт</span>
+                    </div>
+                    <div class="world-meta-row">
+                        <span class="world-meta-label">Закроется через</span>
+                        <span class="world-meta-val never-val">НИКОГДА</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nether -->
+            <div class="world-card world-nether">
+                <div class="world-glow nether-glow"></div>
+                <div class="world-top">
+                    <div class="world-ico-wrap world-ico-red">🔥</div>
+                    <div class="world-badge open">● ОТКРЫТ</div>
+                </div>
+                <div class="world-name">Nether</div>
+                <div class="world-desc">Адское измерение. Огонь, лава, бастионы и несметные ресурсы под землёй.</div>
+                <div class="world-meta">
+                    <div class="world-meta-row">
+                        <span class="world-meta-label">Статус</span>
+                        <span class="world-meta-val open-val">Открыт</span>
+                    </div>
+                    <div class="world-meta-row">
+                        <span class="world-meta-label">Закроется через</span>
+                        <span class="world-meta-val never-val">НИКОГДА</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- End -->
+            <div class="world-card world-end">
+                <div class="world-glow end-glow"></div>
+                <div class="world-top">
+                    <div class="world-ico-wrap world-ico-purple">🐉</div>
+                    <div class="world-badge open">● ОТКРЫТ</div>
+                </div>
+                <div class="world-name">The End</div>
+                <div class="world-desc">Финальное измерение. Дракон, острова эндерменов и шалкеры ждут смельчаков.</div>
+                <div class="world-meta">
+                    <div class="world-meta-row">
+                        <span class="world-meta-label">Статус</span>
+                        <span class="world-meta-val open-val">Открыт</span>
+                    </div>
+                    <div class="world-meta-row">
+                        <span class="world-meta-label">Закроется через</span>
+                        <span class="world-meta-val never-val">НИКОГДА</span>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </div>
 </section>
