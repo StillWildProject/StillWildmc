@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Russo+One&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0a0a0f;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Share Tech Mono', monospace;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .grid-bg {
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(255,30,30,0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,30,30,0.07) 1px, transparent 1px);
+    background-size: 40px 40px;
+    animation: gridPulse 4s ease-in-out infinite;
+  }
+
+  @keyframes gridPulse {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  .scanlines {
+    position: fixed;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(0,0,0,0.15) 2px,
+      rgba(0,0,0,0.15) 4px
+    );
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .container {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    padding: 60px 50px;
+    max-width: 700px;
+    width: 90%;
+  }
+
+  .shield-wrap {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 40px;
+  }
+
+  .shield {
+    width: 120px;
+    height: 120px;
+    margin: 0 auto;
+    animation: shieldFloat 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 20px rgba(255,30,30,0.8)) drop-shadow(0 0 60px rgba(255,30,30,0.4));
+  }
+
+  @keyframes shieldFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .ring {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,30,30,0.5);
+    animation: ringExpand 2.5s ease-out infinite;
+  }
+
+  .ring:nth-child(1) { width: 150px; height: 150px; animation-delay: 0s; }
+  .ring:nth-child(2) { width: 150px; height: 150px; animation-delay: 0.8s; }
+  .ring:nth-child(3) { width: 150px; height: 150px; animation-delay: 1.6s; }
+
+  @keyframes ringExpand {
+    0% { width: 130px; height: 130px; opacity: 1; }
+    100% { width: 260px; height: 260px; opacity: 0; }
+  }
+
+  .label-top {
+    font-family: 'Share Tech Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 6px;
+    color: #ff3030;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    animation: blink 1.5s step-end infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.2; }
+  }
+
+  .title {
+    font-family: 'Russo One', sans-serif;
+    font-size: clamp(38px, 8vw, 72px);
+    color: #ff1a1a;
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    line-height: 1.1;
+    text-shadow:
+      0 0 10px rgba(255,30,30,0.9),
+      0 0 40px rgba(255,30,30,0.5),
+      0 0 80px rgba(255,30,30,0.2);
+    animation: titleGlitch 6s infinite;
+    margin-bottom: 8px;
+  }
+
+  @keyframes titleGlitch {
+    0%, 90%, 100% { transform: none; clip-path: none; }
+    91% { transform: translateX(-4px); clip-path: inset(20% 0 60% 0); color: #ff6060; }
+    92% { transform: translateX(4px); clip-path: inset(60% 0 10% 0); color: #ff0000; }
+    93% { transform: none; clip-path: none; }
+    94% { transform: skewX(-5deg) translateX(3px); }
+    95% { transform: none; }
+  }
+
+  .subtitle {
+    font-family: 'Russo One', sans-serif;
+    font-size: clamp(16px, 3vw, 22px);
+    color: #cc1111;
+    letter-spacing: 10px;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    text-shadow: 0 0 15px rgba(255,30,30,0.6);
+    animation: subtitlePulse 2s ease-in-out infinite;
+  }
+
+  @keyframes subtitlePulse {
+    0%, 100% { opacity: 0.7; letter-spacing: 10px; }
+    50% { opacity: 1; letter-spacing: 12px; }
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 0 auto 36px;
+    max-width: 400px;
+  }
+
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, #ff3030, transparent);
+  }
+
+  .divider-dot {
+    width: 6px;
+    height: 6px;
+    background: #ff3030;
+    border-radius: 50%;
+    box-shadow: 0 0 10px #ff3030;
+    animation: dotPulse 1s ease-in-out infinite;
+  }
+
+  @keyframes dotPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.5); }
+  }
+
+  .info-box {
+    border: 1px solid rgba(255,30,30,0.3);
+    border-left: 3px solid #ff3030;
+    background: rgba(255,10,10,0.05);
+    padding: 20px 24px;
+    margin-bottom: 30px;
+    text-align: left;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .info-box::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: linear-gradient(135deg, rgba(255,30,30,0.08) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .info-box::after {
+    content: '';
+    position: absolute;
+    top: -100%;
+    left: 0;
+    width: 100%;
+    height: 40%;
+    background: linear-gradient(transparent, rgba(255,30,30,0.06), transparent);
+    animation: scanDown 4s linear infinite;
+  }
+
+  @keyframes scanDown {
+    0% { top: -40%; }
+    100% { top: 120%; }
+  }
+
+  .info-label {
+    font-size: 10px;
+    letter-spacing: 4px;
+    color: #ff3030;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+  }
+
+  .info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: rgba(255,100,100,0.7);
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255,30,30,0.08);
+  }
+
+  .info-row:last-child { border: none; }
+
+  .info-val {
+    color: #ff6060;
+    font-weight: bold;
+  }
+
+  .error-code {
+    font-size: 11px;
+    letter-spacing: 3px;
+    color: rgba(255,50,50,0.4);
+    margin-top: 30px;
+    animation: codeScroll 8s linear infinite;
+  }
+
+  @keyframes codeScroll {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 0.8; }
+  }
+
+  .corner {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border-color: rgba(255,30,30,0.4);
+    border-style: solid;
+  }
+
+  .corner-tl { top: 20px; left: 20px; border-width: 2px 0 0 2px; }
+  .corner-tr { top: 20px; right: 20px; border-width: 2px 2px 0 0; }
+  .corner-bl { bottom: 20px; left: 20px; border-width: 0 0 2px 2px; }
+  .corner-br { bottom: 20px; right: 20px; border-width: 0 2px 2px 0; }
+
+  .particle {
+    position: fixed;
+    width: 2px;
+    height: 2px;
+    background: #ff3030;
+    border-radius: 50%;
+    box-shadow: 0 0 6px #ff3030;
+    animation: particleDrift linear infinite;
+    opacity: 0;
+  }
+
+  @keyframes particleDrift {
+    0% { transform: translateY(100vh) translateX(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-100px) translateX(var(--dx)); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+<div class="scanlines"></div>
+
+<div class="corner corner-tl"></div>
+<div class="corner corner-tr"></div>
+<div class="corner corner-bl"></div>
+<div class="corner corner-br"></div>
+
+<div class="container">
+  <div class="label-top">⚠ ДОСТУП ЗАПРЕЩЁН ⚠</div>
+
+  <div class="shield-wrap">
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <div class="ring"></div>
+    <svg class="shield" viewBox="0 0 100 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M50 5 L90 22 L90 58 C90 82 72 100 50 112 C28 100 10 82 10 58 L10 22 Z"
+        fill="rgba(255,20,20,0.12)" stroke="#ff3030" stroke-width="2"/>
+      <path d="M50 18 L78 31 L78 57 C78 74 66 88 50 97 C34 88 22 74 22 57 L22 31 Z"
+        fill="rgba(255,20,20,0.08)" stroke="rgba(255,60,60,0.5)" stroke-width="1"/>
+      <line x1="35" y1="55" x2="47" y2="68" stroke="#ff3030" stroke-width="4" stroke-linecap="round"/>
+      <line x1="47" y1="68" x2="67" y2="42" stroke="#ff3030" stroke-width="4" stroke-linecap="round"/>
+      <circle cx="50" cy="55" r="22" stroke="rgba(255,30,30,0.3)" stroke-width="1" fill="none" stroke-dasharray="4 3"/>
+    </svg>
+  </div>
+
+  <div class="title">САЙТ<br>ЗАБЛОКИРОВАН</div>
+  <div class="subtitle">BLOCKED</div>
+
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-dot"></div>
+    <div class="divider-line"></div>
+  </div>
+
+  <div class="info-box">
+    <div class="info-label">// системная информация</div>
+    <div class="info-row">
+      <span>СТАТУС</span>
+      <span class="info-val">403 FORBIDDEN</span>
+    </div>
+    <div class="info-row">
+      <span>ПРИЧИНА</span>
+      <span class="info-val">КОНТЕНТ ЗАБЛОКИРОВАН</span>
+    </div>
+    <div class="info-row">
+      <span>ПРОТОКОЛ</span>
+      <span class="info-val">HTTPS / TLS 1.3</span>
+    </div>
+    <div class="info-row">
+      <span>ФИЛЬТР</span>
+      <span class="info-val">ACTIVE — LEVEL 5</span>
+    </div>
+    <div class="info-row">
+      <span>ВРЕМЯ</span>
+      <span class="info-val" id="clock">--:--:--</span>
+    </div>
+  </div>
+
+  <div class="error-code" id="errorCode">ERR_BLOCKED_BY_ADMINISTRATOR :: 0x000000A5</div>
+</div>
+
+<script>
+  function updateClock() {
+    const now = new Date();
+    const h = String(now.getHours()).padStart(2,'0');
+    const m = String(now.getMinutes()).padStart(2,'0');
+    const s = String(now.getSeconds()).padStart(2,'0');
+    document.getElementById('clock').textContent = h + ':' + m + ':' + s;
+  }
+  setInterval(updateClock, 1000);
+  updateClock();
+
+  const codes = [
+    'ERR_BLOCKED_BY_ADMINISTRATOR :: 0x000000A5',
+    'NET::ERR_CERT_REVOKED :: 0xC0000120',
+    'ACCESS_VIOLATION :: POLICY_RULE_7734',
+    'CONNECTION_REFUSED :: FIREWALL_DROP',
+    'ERR_BLOCKED_BY_RESPONSE :: 0x80070005',
+  ];
+  let ci = 0;
+  setInterval(() => {
+    ci = (ci + 1) % codes.length;
+    document.getElementById('errorCode').textContent = codes[ci];
+  }, 3000);
+
+  for (let i = 0; i < 18; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const dx = (Math.random() - 0.5) * 200;
+    p.style.cssText = `
+      left: ${Math.random() * 100}%;
+      --dx: ${dx}px;
+      animation-duration: ${4 + Math.random() * 6}s;
+      animation-delay: ${Math.random() * 6}s;
+    `;
+    document.body.appendChild(p);
+  }
+</script>
+
+</body>
+</html>
